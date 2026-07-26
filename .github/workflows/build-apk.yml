@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     name: Build APK & Package to ZIP
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latesשt
 
     steps:
       - name: Checkout Repository
