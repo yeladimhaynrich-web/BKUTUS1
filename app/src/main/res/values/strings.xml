@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">העברת קבצים בבלוטוס</string>
+    <string name="scan_devices">חפש מכשירי בלוטוס nearby</string>
+    <string name="paired_devices">מכשירים מחוברים</string>
+    <string name="connect_device">התחבר למכשיר</string>
+    <string name="request_files">עיון בתיקיות המכשיר השני</string>
+    <string name="transfer_selected">העבר קבצים נבחרים</string>
+    <string name="connection_status">סטטוס חיבור: לא מחובר</string>
+</resources>
