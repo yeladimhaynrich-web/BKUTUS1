@@ -1,0 +1,55 @@
+name: Build and Package Android APK
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build APK & Package to ZIP
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Gradle 8.5
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '8.5'
+
+      - name: Grant Execute Permission for Gradle Wrapper
+        run: |
+          if [ -f "./gradlew" ]; then
+            chmod +x gradlew
+          fi
+
+      - name: Build Debug APK
+        run: |
+          if [ -f "./gradlew" ]; then
+            ./gradlew assembleDebug --stacktrace
+          else
+            gradle assembleDebug --stacktrace
+          fi
+
+      - name: Create Output ZIP with APK
+        run: |
+          mkdir -p output_zip
+          find app/build/outputs/apk/debug/ -name "*.apk" -exec cp {} output_zip/BluetoothFileTransfer-debug.apk \;
+          cd output_zip
+          zip -r ../BluetoothTransferApp-APK.zip .
+          cd ..
+
+      - name: Upload APK ZIP Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: BluetoothTransferApp-APK-ZIP
+          path: BluetoothTransferApp-APK.zip
+          retention-days: 30
